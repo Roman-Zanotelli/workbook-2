@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class VehicleInventory {
     ArrayList<Vehicle> inventory;
-
+    final float min_listed_price = 1.00f;
     public VehicleInventory(Vehicle[] inventory) {
         this.inventory = new ArrayList<Vehicle>();
         this.inventory.addAll(List.of(inventory));

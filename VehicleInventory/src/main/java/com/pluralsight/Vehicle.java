@@ -36,8 +36,8 @@ public class Vehicle {
         scanner.nextLine();
         System.out.print("\t\u001B[47m\u001B[30m\u001B[1mEnter Price:\u001B[0m ");
         this.price = scanner.nextFloat();
-        while(price <= 0){
-            System.out.println("\n\n\n\u001B[1m\u001B[31m(ERROR) \u001B[47m\u001B[30mPrice Can't be Less Than 0!\u001B[0m\n");
+        while(price < target.min_listed_price){
+            System.out.printf("\n\n\n\u001B[1m\u001B[31m(ERROR) \u001B[47m\u001B[30mPrice Can't be Less Than Minimum Listing Pice ($%.2f)!\u001B[0m\n\n", target.min_listed_price);
             System.out.print("\t\u001B[47m\u001B[30m\u001B[1mEnter Price:\u001B[0m ");
             this.price = scanner.nextFloat();
         }
