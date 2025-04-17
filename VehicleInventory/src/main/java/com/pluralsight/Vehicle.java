@@ -28,9 +28,19 @@ public class Vehicle {
         this.color = scanner.nextLine();
         System.out.print("\t\u001B[47m\u001B[30m\u001B[1mEnter Odometer Reading:\u001B[0m ");
         this.odometerReading = scanner.nextInt();
+        while (odometerReading < 0){
+            System.out.println("\n\n\n\u001B[1m\u001B[31m(ERROR) \u001B[47m\u001B[30mOdomerter Reading Can't be Negative!\u001B[0m\n");
+            System.out.print("\t\u001B[47m\u001B[30m\u001B[1mEnter Odometer Reading:\u001B[0m ");
+            this.odometerReading = scanner.nextInt();
+        }
         scanner.nextLine();
         System.out.print("\t\u001B[47m\u001B[30m\u001B[1mEnter Price:\u001B[0m ");
         this.price = scanner.nextFloat();
+        while(price <= 0){
+            System.out.println("\n\n\n\u001B[1m\u001B[31m(ERROR) \u001B[47m\u001B[30mPrice Can't be Less Than 0!\u001B[0m\n");
+            System.out.print("\t\u001B[47m\u001B[30m\u001B[1mEnter Price:\u001B[0m ");
+            this.price = scanner.nextFloat();
+        }
         System.out.print("\n\u001B[1m\u001B[32mCar Has Been Added!\u001B[0m\n");
         this.print_all();
     }
