@@ -11,10 +11,16 @@ public class Vehicle {
         this.odometerReading = odometerReading;
         this.price = price;
     }
-    public Vehicle(Scanner scanner){
+    public Vehicle(Scanner scanner, VehicleInventory target){
         System.out.println("\n\u001B[4mAdding New Car to Inventory:\u001B[0m");
         System.out.print("\t\u001B[47m\u001B[30m\u001B[1mEnter Vehicle Id:\u001B[0m ");
         this.vehicleId = scanner.nextLong();
+        while (target.does_vehicle_id_exist(this.vehicleId)){
+            System.out.println("\n\n\n\u001B[1m\u001B[31m(ERROR) \u001B[47m\u001B[30mVehicle ID Already Exists in Stock!\u001B[0m\n");
+
+            System.out.print("\t\u001B[47m\u001B[30m\u001B[1mEnter Vehicle Id:\u001B[0m ");
+            this.vehicleId = scanner.nextLong();
+        }
         scanner.nextLine();
         System.out.print("\t\u001B[47m\u001B[30m\u001B[1mEnter Make/Model:\u001B[0m ");
         this.makeModel = scanner.nextLine();

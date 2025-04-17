@@ -105,6 +105,14 @@ public class VehicleInventory {
         scanner.nextLine();
     }
     public void add(Scanner scanner){
-        this.inventory.add(new Vehicle(scanner));
+        this.inventory.add(new Vehicle(scanner, this));
+    }
+    public boolean does_vehicle_id_exist(long vehicleId){
+        for (Vehicle vehicle : this.inventory){
+            if (vehicle.getVehicleId() == vehicleId){
+                return true;
+            }
+        }
+        return false;
     }
 }
