@@ -1,9 +1,9 @@
-package com.pluralsight.terminal;
+package com.pluralsight;
 
 
 
 //todo: Add a war to impose format settings for overarching classes reducing ANSI escape code redundancy/repetition
-public class TerminalMenu { //Class used to unify/simplify printing menus/text to the terminal for the user to read.
+public class DisplayTerminal { //Class used to unify/simplify printing menus/text to the terminal for the user to read.
 
     public static void ScannerClosedErr(){ //err for when the scanner unexpectedly closes
         System.out.println("\n\n\n\u001B[1m\u001B[33mScanner Closed! Exiting program!\u001B[0m");

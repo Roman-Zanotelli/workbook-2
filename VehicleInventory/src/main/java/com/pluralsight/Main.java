@@ -1,6 +1,5 @@
 package com.pluralsight;
 
-import com.pluralsight.terminal.TerminalMenu;
 import com.pluralsight.vehicle.Vehicle;
 import com.pluralsight.vehicle.VehicleInventory;
 
@@ -18,29 +17,29 @@ public class Main { //main logic entry
             //currently nothing but could be used to give addition debugging/metrics after a complete cycle of user interaction
         }
 
-        TerminalMenu.Response.GoodBye(); //goodbye!!!
+        DisplayTerminal.Response.GoodBye(); //goodbye!!!
         scanner.close(); //closes the scanner if it was still open
     }
 
 
     private static boolean run(){ //main logic entry point
-        TerminalMenu.PromptUser.MainMenu();
+        DisplayTerminal.PromptUser.MainMenu();
         try {
             return UserQuery.MainMenu(); //main menu interaction
         } catch (InputMismatchException e){ //occurs if scanner throws error that isn't properly handled inside function
 
-            TerminalMenu.WarnUser.InvalidInput.Generic(); //sends generic invalid input warning (attempt within allowance)
+            DisplayTerminal.WarnUser.InvalidInput.Generic(); //sends generic invalid input warning (attempt within allowance)
             scanner.nextLine(); //clear input
             return true; //continue
 
         } catch(IllegalStateException e){ //occurs if scanner closes
 
-            TerminalMenu.ScannerClosedErr(); //sends scanner closed err (do not attempt recover)
+            DisplayTerminal.ScannerClosedErr(); //sends scanner closed err (do not attempt recover)
             return false; //shuts off program
 
         } catch (Error e){ //generic unexpected error
 
-            TerminalMenu.WarnUser.UnexpectedErr(); //sends unexpected warning (attempt recover within allowance)
+            DisplayTerminal.WarnUser.UnexpectedErr(); //sends unexpected warning (attempt recover within allowance)
             scanner.nextLine(); //clear input
 
             //track allowances for unexpected errors (these shouldn't happen but if they do may be recoverable)
@@ -55,7 +54,7 @@ public class Main { //main logic entry
     private static class UserQuery {
         public static boolean MainMenu(){ //Entry point for menu logic
             while(!scanner.hasNextInt()){ //check to ensure the input is an int
-                TerminalMenu.WarnUser.InvalidInput.MainMenu(1,6); //print warning and menu again if not
+                DisplayTerminal.WarnUser.InvalidInput.MainMenu(1,6); //print warning and menu again if not
             }
             switch (scanner.nextInt()) { //check input
                 case 0:
@@ -94,172 +93,172 @@ public class Main { //main logic entry
                     return false; //intentionally shut off program
 
                 default:
-                    TerminalMenu.WarnUser.InvalidSelection.Menu(); //warn the user that the selection was not valid (correct input type, wrong value)
+                    DisplayTerminal.WarnUser.InvalidSelection.Menu(); //warn the user that the selection was not valid (correct input type, wrong value)
                     break;
             }
             return true;
         }
         public static void ListAll(){ //list all cars in inv
-            TerminalMenu.Header.InStock(); //prints header
+            DisplayTerminal.Header.InStock(); //prints header
             inventory.list_all(); //prints all cars
 
-            TerminalMenu.PromptUser.PressEnterToContinue(); //prompts user to continue
+            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompts user to continue
             scanner.nextLine(); // consume carrage return
             scanner.nextLine(); //wait for enter
         }
         public static void SearchColor(){
-            TerminalMenu.Header.SearchingVehicles(); //search header
+            DisplayTerminal.Header.SearchingVehicles(); //search header
             scanner.nextLine();
 
-            TerminalMenu.PromptUser.Color();//prompts user for color
+            DisplayTerminal.PromptUser.Color();//prompts user for color
             String color = scanner.nextLine().trim();
 
-            TerminalMenu.Header.MatchingDescription(); //matching description header
+            DisplayTerminal.Header.MatchingDescription(); //matching description header
             inventory.search_color(color);
 
-            TerminalMenu.PromptUser.PressEnterToContinue(); //prompts user to continue
+            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompts user to continue
             scanner.nextLine();
         }
         public static void SearchPrice(){
-            TerminalMenu.Header.SearchingVehicles(); //search header
+            DisplayTerminal.Header.SearchingVehicles(); //search header
 
-            TerminalMenu.PromptUser.MinPrice(); //prompt user min price
+            DisplayTerminal.PromptUser.MinPrice(); //prompt user min price
             float min_price = scanner.nextFloat();
 
-            TerminalMenu.PromptUser.MaxPrice();//prompt user max price
+            DisplayTerminal.PromptUser.MaxPrice();//prompt user max price
             float max_price = scanner.nextFloat();
 
-            TerminalMenu.Header.MatchingDescription();//matching desc header
+            DisplayTerminal.Header.MatchingDescription();//matching desc header
             inventory.search_price(min_price, max_price); //print matching
 
-            TerminalMenu.PromptUser.PressEnterToContinue();//prompt to continue
+            DisplayTerminal.PromptUser.PressEnterToContinue();//prompt to continue
             scanner.nextLine();
             scanner.nextLine();
         }
         public static void SearchMakeModel(){
-            TerminalMenu.Header.SearchingVehicles();//search header
+            DisplayTerminal.Header.SearchingVehicles();//search header
             scanner.nextLine();
 
-            TerminalMenu.PromptUser.MakeModel(); //prompt user for model
+            DisplayTerminal.PromptUser.MakeModel(); //prompt user for model
             String make_model = scanner.nextLine().trim();
 
-            TerminalMenu.Header.MatchingDescription(); //matching desc header
+            DisplayTerminal.Header.MatchingDescription(); //matching desc header
             inventory.search_make_model(make_model); //print matching
 
-            TerminalMenu.PromptUser.PressEnterToContinue(); //prompt to continue
+            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompt to continue
             scanner.nextLine();
         }
         private static void SearchOdometer() {
-            TerminalMenu.Header.SearchingVehicles();//search header
-            TerminalMenu.PromptUser.MinMiles();//prompt user for min mileage
+            DisplayTerminal.Header.SearchingVehicles();//search header
+            DisplayTerminal.PromptUser.MinMiles();//prompt user for min mileage
             int min_miles = scanner.nextInt();
 
-            TerminalMenu.PromptUser.MaxMiles();//prompt user for max mileage
+            DisplayTerminal.PromptUser.MaxMiles();//prompt user for max mileage
             int max_miles = scanner.nextInt();
 
-            TerminalMenu.Header.MatchingDescription(); //matching desc header
+            DisplayTerminal.Header.MatchingDescription(); //matching desc header
             inventory.search_miles(min_miles, max_miles); //print matching
 
-            TerminalMenu.PromptUser.PressEnterToContinue(); //prompt user to continue
+            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompt user to continue
             scanner.nextLine();
             scanner.nextLine();
         }
 
         private static void Search() {
-            TerminalMenu.WarnUser.Todo(); //warns user this method is still WIP
+            DisplayTerminal.WarnUser.Todo(); //warns user this method is still WIP
 
-            TerminalMenu.Header.SearchingVehicles(); //search header
+            DisplayTerminal.Header.SearchingVehicles(); //search header
 
-            TerminalMenu.PromptUser.ExclusiveSearch(); //prompts user if they want to search exclusively for terms
+            DisplayTerminal.PromptUser.ExclusiveSearch(); //prompts user if they want to search exclusively for terms
             boolean exclusive = scanner.nextBoolean();
 
-            TerminalMenu.PromptUser.ID(); //prompt user for vehicle id
+            DisplayTerminal.PromptUser.ID(); //prompt user for vehicle id
             long id = scanner.nextLong();
             scanner.nextLine();
 
-            TerminalMenu.PromptUser.MakeModel(); //prompt user for make/model
+            DisplayTerminal.PromptUser.MakeModel(); //prompt user for make/model
             String make_model = scanner.nextLine().trim();
 
-            TerminalMenu.PromptUser.MinPrice(); //prompt user for min price
+            DisplayTerminal.PromptUser.MinPrice(); //prompt user for min price
             float min_price = scanner.nextFloat();
 
-            TerminalMenu.PromptUser.MaxPrice();//prompt user for max price
+            DisplayTerminal.PromptUser.MaxPrice();//prompt user for max price
             float max_price = scanner.nextFloat();
             scanner.nextLine();
 
-            TerminalMenu.PromptUser.Color(); //prompt user for color
+            DisplayTerminal.PromptUser.Color(); //prompt user for color
             String color = scanner.nextLine().trim();
 
-            TerminalMenu.PromptUser.MinMiles(); //prompt user for min miles
+            DisplayTerminal.PromptUser.MinMiles(); //prompt user for min miles
             int min_miles = scanner.nextInt();
 
-            TerminalMenu.PromptUser.MaxMiles();//prompt user for max miles
+            DisplayTerminal.PromptUser.MaxMiles();//prompt user for max miles
             int max_miles = scanner.nextInt();
 
             inventory.search(exclusive, id, make_model, min_price, max_price, color, min_miles, max_miles); //searches & prints results
         }
 
         private static void SearchId() {
-            TerminalMenu.Header.SearchingVehicles(); //search header
+            DisplayTerminal.Header.SearchingVehicles(); //search header
 
-            TerminalMenu.PromptUser.ID(); //prompt user for vehicle ID
+            DisplayTerminal.PromptUser.ID(); //prompt user for vehicle ID
             long id = scanner.nextLong();
 
-            TerminalMenu.Header.MatchingDescription();//matching desc header
+            DisplayTerminal.Header.MatchingDescription();//matching desc header
             inventory.search_id(id); //search and print matching
 
-            TerminalMenu.PromptUser.PressEnterToContinue(); //prompt user to continue
+            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompt user to continue
             scanner.nextLine();
             scanner.nextLine();
         }
         public static void Add(){
             long vehicleId; String makeModel; String color; int odometerReading; float price; //vehicle variables
 
-            TerminalMenu.Header.AddingVehicle();//Add vehicle header
+            DisplayTerminal.Header.AddingVehicle();//display add vehicle header
 
-            TerminalMenu.PromptUser.ID();//prompt usr for vehicle id
+            DisplayTerminal.PromptUser.ID();//prompt usr for vehicle id
             vehicleId = scanner.nextLong();
             while (inventory.does_vehicle_id_exist(vehicleId)){//check if id exists
-                TerminalMenu.WarnUser.Vehicle.IDTaken(); //warn id is taken
-                TerminalMenu.PromptUser.ID(); //re-prompt
+                DisplayTerminal.WarnUser.Vehicle.IDTaken(); //warn id is taken
+                DisplayTerminal.PromptUser.ID(); //re-prompt
                 vehicleId = scanner.nextLong(); //retry
             }
             scanner.nextLine(); //clear carriage
 
 
-            TerminalMenu.PromptUser.MakeModel(); //prompt make model
+            DisplayTerminal.PromptUser.MakeModel(); //prompt make model
             makeModel = scanner.nextLine();
 
-            TerminalMenu.PromptUser.Color(); //prompt user for color
+            DisplayTerminal.PromptUser.Color(); //prompt user for color
             color = scanner.nextLine();
 
-            TerminalMenu.PromptUser.Odometer(); //prompt user for mileage
+            DisplayTerminal.PromptUser.Odometer(); //prompt user for mileage
             odometerReading = scanner.nextInt();
             while (odometerReading < 0){//checks odometer isn't negative
-                TerminalMenu.WarnUser.Vehicle.OdometerTooLow(); //warns user if too low
-                TerminalMenu.PromptUser.Odometer(); //re-prompt
+                DisplayTerminal.WarnUser.Vehicle.OdometerTooLow(); //warns user if too low
+                DisplayTerminal.PromptUser.Odometer(); //re-prompt
                 odometerReading = scanner.nextInt(); //retry
             }
             scanner.nextLine();//clear carriage return
 
-            TerminalMenu.PromptUser.Price();//prompt user for price
+            DisplayTerminal.PromptUser.Price();//prompt user for price
             price = scanner.nextFloat();
             while(price < inventory.min_listed_price){//check price isn't less than minimum listing price
-                TerminalMenu.WarnUser.Vehicle.PriceTooLow(inventory.min_listed_price);
-                TerminalMenu.PromptUser.Price();//re-prompt
+                DisplayTerminal.WarnUser.Vehicle.PriceTooLow(inventory.min_listed_price);
+                DisplayTerminal.PromptUser.Price();//re-prompt
                 price = scanner.nextFloat(); //retry
             }
             scanner.nextLine();//clear carriage return
             Vehicle new_vehicle = new Vehicle(vehicleId, makeModel, color, odometerReading, price); //add vehicle
             new_vehicle.print_all(); //print vehicle information
-            TerminalMenu.PromptUser.ConfirmAddVehicle(); //ask to confirm
+            DisplayTerminal.PromptUser.ConfirmAddVehicle(); //ask to confirm
             if (!scanner.nextBoolean()){
-                TerminalMenu.Response.CarHasBeenCanceled();//acknowledge the cancel
+                DisplayTerminal.Response.CarHasBeenCanceled();//acknowledge the cancel
                 return; //exit early berfore adding
             }
 
             inventory.add(new_vehicle); //add vehicle
-            TerminalMenu.Response.CarHasBeenAdded(); //acknowledge successful add
+            DisplayTerminal.Response.CarHasBeenAdded(); //acknowledge successful add
         }
     }
 
