@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleInventory {
-    ArrayList<Vehicle> inventory; //inventory data
-    public final float min_listed_price = 1.00f; //minimum listed price
+    private final ArrayList<Vehicle> inventory; //inventory data
+    private final float min_listed_price = 1.00f; //minimum listed price
     public VehicleInventory(){
         this.inventory = new ArrayList<Vehicle>();
         this.inventory.addAll(List.of(new Vehicle[]{ //default values
@@ -70,13 +70,13 @@ public class VehicleInventory {
             if (exclusive){ //all valid parameters must be true
                 //defaults value to acceptable range if a valid parameter was not originally present allowing for optional values (-1 or " ")
                 //must store it as temp
-                long temp_id = id != -1? id : vehicle.vehicleId;
-                String temp_makeModel = !makeModel.isBlank() ? makeModel : vehicle.makeModel;
-                float temp_minPrice = minPrice != -1 ? minPrice : vehicle.price;
-                float temp_maxPrice = maxPrice != -1 ? maxPrice : vehicle.price;
-                String temp_color = !color.isBlank() ? color : vehicle.color;
-                float temp_minMiles = minMiles != -1 ? minMiles : vehicle.odometerReading;
-                float temp_maxMiles = maxMiles != -1 ? maxMiles : vehicle.odometerReading;
+                long temp_id = id != -1? id : vehicle.getVehicleId();
+                String temp_makeModel = !makeModel.isBlank() ? makeModel : vehicle.getMakeModel();
+                float temp_minPrice = minPrice != -1 ? minPrice : vehicle.getPrice();
+                float temp_maxPrice = maxPrice != -1 ? maxPrice : vehicle.getPrice();
+                String temp_color = !color.isBlank() ? color : vehicle.getColor();
+                float temp_minMiles = minMiles != -1 ? minMiles : vehicle.getOdometerReading();
+                float temp_maxMiles = maxMiles != -1 ? maxMiles : vehicle.getOdometerReading();
 
                 //actual exclusive check
                 if (temp_id == vehicle.getVehicleId() && temp_makeModel.equalsIgnoreCase(vehicle.getMakeModel()) && temp_minPrice <= vehicle.getPrice() && temp_maxPrice >= vehicle.getPrice() && temp_color.equalsIgnoreCase(vehicle.getColor()) && temp_minMiles <= vehicle.getOdometerReading() && temp_maxMiles >= vehicle.getOdometerReading()) vehicle.print_all(); //print if valid
@@ -86,5 +86,9 @@ public class VehicleInventory {
                 if(id == vehicle.getVehicleId() || makeModel.equalsIgnoreCase(vehicle.getMakeModel()) || (minPrice <= vehicle.getPrice() && maxPrice >= vehicle.getPrice()) || color.equalsIgnoreCase(vehicle.getColor()) || (minMiles <= vehicle.getOdometerReading() && maxMiles >= vehicle.getOdometerReading())) vehicle.print_all(); //print if valid
             }
         }
+    }
+
+    public float get_min_listed_price() {
+        return min_listed_price;
     }
 }

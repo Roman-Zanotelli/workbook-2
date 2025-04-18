@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 public class Vehicle {
     //values
-    long vehicleId;
-    String makeModel;
-    String color;
-    int odometerReading;
-    float price;
+    private long vehicleId;
+    private String makeModel;
+    private String color;
+    private int odometerReading;
+    private float price;
 
     //constructor
     public Vehicle(long vehicleId, String makeModel, String color, int odometerReading, float price) {

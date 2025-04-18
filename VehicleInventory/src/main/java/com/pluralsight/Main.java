@@ -7,18 +7,24 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main { //main logic entry
-    static int unexpected_errs = 0; //tracks unexpected errors that have occurred
-    static final int unexpected_err_allowance = 3; //total unexpected errors allowed before closing
-    static VehicleInventory inventory = new VehicleInventory(); //static shared inventory
-    static Scanner scanner; //static scanner used across all modes
+    private static int unexpected_errs = 0; //tracks unexpected errors that have occurred
+    private static final int unexpected_err_allowance = 3; //total unexpected errors allowed before closing
+    private static VehicleInventory inventory = new VehicleInventory(); //static shared inventory
+    private static Scanner scanner; //static scanner used across all modes
     public static void main(String[] args) {
         scanner = new Scanner(System.in); //scanner init
+        //todo: could add a way to load vehicles on startup from previous session here (would replace default values if previous session exists)
+
+
         while(run()){ //main logic entrypoint, run returns false if program should close
             //currently nothing but could be used to give addition debugging/metrics after a complete cycle of user interaction
+            //todo: could add a way to calculate the time between run cycles here
         }
 
         DisplayTerminal.Response.GoodBye(); //goodbye!!!
         scanner.close(); //closes the scanner if it was still open
+
+        //todo: could add a way to save inventory here such as with a json representing vehicle array
     }
 
 
@@ -52,7 +58,7 @@ public class Main { //main logic entry
 
     //input query logic for user to interact with
     private static class UserQuery {
-        public static boolean MainMenu(){ //Entry point for menu logic
+        private static boolean MainMenu(){ //Entry point for menu logic
             while(!scanner.hasNextInt()){ //check to ensure the input is an int
                 DisplayTerminal.WarnUser.InvalidInput.MainMenu(1,6); //print warning and menu again if not
             }
@@ -98,68 +104,68 @@ public class Main { //main logic entry
             }
             return true;
         }
-        public static void ListAll(){ //list all cars in inv
+        private static void ListAll(){ //list all cars in inv
             DisplayTerminal.Header.InStock(); //prints header
             inventory.list_all(); //prints all cars
 
-            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompts user to continue
+            DisplayTerminal.PromptUser.Vehicle.PressEnterToContinue(); //prompts user to continue
             scanner.nextLine(); // consume carrage return
             scanner.nextLine(); //wait for enter
         }
-        public static void SearchColor(){
+        private static void SearchColor(){
             DisplayTerminal.Header.SearchingVehicles(); //search header
             scanner.nextLine();
 
-            DisplayTerminal.PromptUser.Color();//prompts user for color
+            DisplayTerminal.PromptUser.Vehicle.Color();//prompts user for color
             String color = scanner.nextLine().trim();
 
             DisplayTerminal.Header.MatchingDescription(); //matching description header
             inventory.search_color(color);
 
-            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompts user to continue
+            DisplayTerminal.PromptUser.Vehicle.PressEnterToContinue(); //prompts user to continue
             scanner.nextLine();
         }
-        public static void SearchPrice(){
+        private static void SearchPrice(){
             DisplayTerminal.Header.SearchingVehicles(); //search header
 
-            DisplayTerminal.PromptUser.MinPrice(); //prompt user min price
+            DisplayTerminal.PromptUser.Vehicle.MinPrice(); //prompt user min price
             float min_price = scanner.nextFloat();
 
-            DisplayTerminal.PromptUser.MaxPrice();//prompt user max price
+            DisplayTerminal.PromptUser.Vehicle.MaxPrice();//prompt user max price
             float max_price = scanner.nextFloat();
 
             DisplayTerminal.Header.MatchingDescription();//matching desc header
             inventory.search_price(min_price, max_price); //print matching
 
-            DisplayTerminal.PromptUser.PressEnterToContinue();//prompt to continue
+            DisplayTerminal.PromptUser.Vehicle.PressEnterToContinue();//prompt to continue
             scanner.nextLine();
             scanner.nextLine();
         }
-        public static void SearchMakeModel(){
+        private static void SearchMakeModel(){
             DisplayTerminal.Header.SearchingVehicles();//search header
             scanner.nextLine();
 
-            DisplayTerminal.PromptUser.MakeModel(); //prompt user for model
+            DisplayTerminal.PromptUser.Vehicle.MakeModel(); //prompt user for model
             String make_model = scanner.nextLine().trim();
 
             DisplayTerminal.Header.MatchingDescription(); //matching desc header
             inventory.search_make_model(make_model); //print matching
 
-            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompt to continue
+            DisplayTerminal.PromptUser.Vehicle.PressEnterToContinue(); //prompt to continue
             scanner.nextLine();
         }
         private static void SearchOdometer() {
             DisplayTerminal.Header.SearchingVehicles();//search header
-            DisplayTerminal.PromptUser.MinMiles();//prompt user for min mileage
+            DisplayTerminal.PromptUser.Vehicle.MinMiles();//prompt user for min mileage
             int min_miles = scanner.nextInt();
 
-            DisplayTerminal.PromptUser.MaxMiles();//prompt user for max mileage
+            DisplayTerminal.PromptUser.Vehicle.MaxMiles();//prompt user for max mileage
             int max_miles = scanner.nextInt();
 
             DisplayTerminal.Header.MatchingDescription(); //matching desc header
             inventory.search_miles(min_miles, max_miles); //print matching
 
-            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompt user to continue
+            DisplayTerminal.PromptUser.Vehicle.PressEnterToContinue(); //prompt user to continue
             scanner.nextLine();
             scanner.nextLine();
         }
@@ -172,27 +178,27 @@ public class Main { //main logic entry
             DisplayTerminal.PromptUser.ExclusiveSearch(); //prompts user if they want to search exclusively for terms
             boolean exclusive = scanner.nextBoolean();
 
-            DisplayTerminal.PromptUser.ID(); //prompt user for vehicle id
+            DisplayTerminal.PromptUser.Vehicle.ID(); //prompt user for vehicle id
             long id = scanner.nextLong();
             scanner.nextLine();
 
-            DisplayTerminal.PromptUser.MakeModel(); //prompt user for make/model
+            DisplayTerminal.PromptUser.Vehicle.MakeModel(); //prompt user for make/model
             String make_model = scanner.nextLine().trim();
 
-            DisplayTerminal.PromptUser.MinPrice(); //prompt user for min price
+            DisplayTerminal.PromptUser.Vehicle.MinPrice(); //prompt user for min price
             float min_price = scanner.nextFloat();
 
-            DisplayTerminal.PromptUser.MaxPrice();//prompt user for max price
+            DisplayTerminal.PromptUser.Vehicle.MaxPrice();//prompt user for max price
             float max_price = scanner.nextFloat();
             scanner.nextLine();
 
-            DisplayTerminal.PromptUser.Color(); //prompt user for color
+            DisplayTerminal.PromptUser.Vehicle.Color(); //prompt user for color
             String color = scanner.nextLine().trim();
 
-            DisplayTerminal.PromptUser.MinMiles(); //prompt user for min miles
+            DisplayTerminal.PromptUser.Vehicle.MinMiles(); //prompt user for min miles
             int min_miles = scanner.nextInt();
 
-            DisplayTerminal.PromptUser.MaxMiles();//prompt user for max miles
+            DisplayTerminal.PromptUser.Vehicle.MaxMiles();//prompt user for max miles
             int max_miles = scanner.nextInt();
 
             inventory.search(exclusive, id, make_model, min_price, max_price, color, min_miles, max_miles); //searches & prints results
@@ -201,51 +207,51 @@ public class Main { //main logic entry
         private static void SearchId() {
             DisplayTerminal.Header.SearchingVehicles(); //search header
 
-            DisplayTerminal.PromptUser.ID(); //prompt user for vehicle ID
+            DisplayTerminal.PromptUser.Vehicle.ID(); //prompt user for vehicle ID
             long id = scanner.nextLong();
 
             DisplayTerminal.Header.MatchingDescription();//matching desc header
             inventory.search_id(id); //search and print matching
 
-            DisplayTerminal.PromptUser.PressEnterToContinue(); //prompt user to continue
+            DisplayTerminal.PromptUser.Vehicle.PressEnterToContinue(); //prompt user to continue
             scanner.nextLine();
             scanner.nextLine();
         }
-        public static void Add(){
+        private static void Add(){
             long vehicleId; String makeModel; String color; int odometerReading; float price; //vehicle variables
 
             DisplayTerminal.Header.AddingVehicle();//display add vehicle header
 
-            DisplayTerminal.PromptUser.ID();//prompt usr for vehicle id
+            DisplayTerminal.PromptUser.Vehicle.ID();//prompt usr for vehicle id
             vehicleId = scanner.nextLong();
             while (inventory.does_vehicle_id_exist(vehicleId)){//check if id exists
                 DisplayTerminal.WarnUser.Vehicle.IDTaken(); //warn id is taken
-                DisplayTerminal.PromptUser.ID(); //re-prompt
+                DisplayTerminal.PromptUser.Vehicle.ID(); //re-prompt
                 vehicleId = scanner.nextLong(); //retry
             }
             scanner.nextLine(); //clear carriage
 
 
-            DisplayTerminal.PromptUser.MakeModel(); //prompt make model
+            DisplayTerminal.PromptUser.Vehicle.MakeModel(); //prompt make model
             makeModel = scanner.nextLine();
 
-            DisplayTerminal.PromptUser.Color(); //prompt user for color
+            DisplayTerminal.PromptUser.Vehicle.Color(); //prompt user for color
             color = scanner.nextLine();
 
-            DisplayTerminal.PromptUser.Odometer(); //prompt user for mileage
+            DisplayTerminal.PromptUser.Vehicle.Odometer(); //prompt user for mileage
             odometerReading = scanner.nextInt();
             while (odometerReading < 0){//checks odometer isn't negative
                 DisplayTerminal.WarnUser.Vehicle.OdometerTooLow(); //warns user if too low
-                DisplayTerminal.PromptUser.Odometer(); //re-prompt
+                DisplayTerminal.PromptUser.Vehicle.Odometer(); //re-prompt
                 odometerReading = scanner.nextInt(); //retry
             }
             scanner.nextLine();//clear carriage return
 
-            DisplayTerminal.PromptUser.Price();//prompt user for price
+            DisplayTerminal.PromptUser.Vehicle.Price();//prompt user for price
             price = scanner.nextFloat();
-            while(price < inventory.min_listed_price){//check price isn't less than minimum listing price
-                DisplayTerminal.WarnUser.Vehicle.PriceTooLow(inventory.min_listed_price);
-                DisplayTerminal.PromptUser.Price();//re-prompt
+            while(price < inventory.get_min_listed_price()){//check price isn't less than minimum listing price
+                DisplayTerminal.WarnUser.Vehicle.PriceTooLow(inventory.get_min_listed_price());
+                DisplayTerminal.PromptUser.Vehicle.Price();//re-prompt
                 price = scanner.nextFloat(); //retry
             }
             scanner.nextLine();//clear carriage return
