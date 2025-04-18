@@ -23,15 +23,19 @@ public class Vehicle {
     public long getVehicleId() {
         return vehicleId;
     }
+
     public String getMakeModel() {
         return makeModel;
     }
+
     public String getColor() {
         return color;
     }
+
     public int getOdometerReading() {
         return odometerReading;
     }
+
     public float getPrice() {
         return price;
     }
@@ -40,15 +44,19 @@ public class Vehicle {
     public void setPrice(float price) {
         this.price = price;
     }
+
     public void setOdometerReading(int odometerReading) {
         this.odometerReading = odometerReading;
     }
+
     public void setColor(String color) {
         this.color = color;
     }
+
     public void setMakeModel(String makeModel) {
         this.makeModel = makeModel;
     }
+    
     public void setVehicleId(long vehicleId) {
         this.vehicleId = vehicleId;
     }

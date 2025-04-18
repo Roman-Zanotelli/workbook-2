@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleInventory {
+    //values
     private final ArrayList<Vehicle> inventory; //inventory data
     private final float min_listed_price = 1.00f; //minimum listed price
+
+
+    //constructors ---------------------------------------------------------------
     public VehicleInventory(){
         this.inventory = new ArrayList<Vehicle>();
         this.inventory.addAll(List.of(new Vehicle[]{ //default values
@@ -17,34 +21,43 @@ public class VehicleInventory {
                 new Vehicle(101126, "Jeep Wrangler", "Yellow", 30000, 16000)
         }));
     }
+
     public VehicleInventory(Vehicle[] inventory) { //Initializes Inventory based off list
         this.inventory = new ArrayList<Vehicle>(); //initialize array
         this.inventory.addAll(List.of(inventory)); //copy contents
     }
+
+
+    //methods --------------------------------------------------------------
     public void list_all(){ //print all
         for (Vehicle vehicle : this.inventory){ //cycle through all
             vehicle.print_all();
         }
     }
+
     public void search_make_model(String make_model){ //search based on make and model
         for (Vehicle vehicle : this.inventory){
             if (vehicle.getMakeModel().equalsIgnoreCase(make_model)) vehicle.print_all(); //print if match
         }
     }
-    public void search_price(float min_price, float max_price){ //search all based on price rnage
+
+    public void search_price(float min_price, float max_price){ //search all based on price range
         for (Vehicle vehicle : this.inventory){
             float price = vehicle.getPrice();
             if (min_price <= price && price <= max_price) vehicle.print_all(); //print if in range
         }
     }
+
     public void search_color(String color){ //search all based on color
         for (Vehicle vehicle : this.inventory){
             if (vehicle.getColor().equalsIgnoreCase(color)) vehicle.print_all(); //print if match
         }
     }
+
     public void add(Vehicle vehicle){ //add a vehicle to inv
         this.inventory.add(vehicle); //add to inv
     }
+
     public boolean does_vehicle_id_exist(long vehicleId){ //checks if a vehicle id exists (used when creating new vehicles)
         for (Vehicle vehicle : this.inventory){
             if (vehicle.getVehicleId() == vehicleId) return true; //print if match
